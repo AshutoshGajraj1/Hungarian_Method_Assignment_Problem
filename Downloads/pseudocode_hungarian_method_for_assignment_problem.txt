@@ -1,0 +1,55 @@
+Input: Cost matrix C[n][n]
+
+Step 1: Develop the Cost Matrix
+  If the matrix is not square:
+    Add dummy rows/columns with zero cost to make it square
+
+Step 2: Find the Opportunity Cost Matrix
+  For each row:
+    Subtract the minimum value of that row from all elements in that row
+  For each column:
+    Subtract the minimum value of that column from all elements in that column
+
+Step 3: Make Assignments
+  While not all assignments are made:
+    (a) First Round:
+      For each row with exactly one zero:
+        Assign (mark ☐), cross off (×) other zeros in the same column
+      For each column with exactly one zero:
+        Assign (mark ☐), cross off (×) other zeros in the same row
+
+    (b) Second Round:
+      For any unassigned rows/columns with multiple zeros:
+        Arbitrarily assign one zero, cross off others
+
+Step 4: Check Optimality
+  If number of assignments == number of rows (or columns):
+    Stop — Optimal assignment found
+  Else:
+    Go to Step 5
+
+Step 5: Revise Opportunity Cost Matrix
+  Mark (✓) rows without an assignment
+  Repeat:
+    For each marked row:
+      If it has a zero, mark corresponding column
+    For each marked column:
+      If it has an assigned zero, mark corresponding row
+  Until no new rows/columns are marked
+  Draw lines through all unmarked rows and marked columns
+
+  If number of lines == n:
+    Stop — Optimal solution found
+  Else:
+    Go to Step 6
+
+Step 6: Develop New Revised Cost Matrix
+  Let k = minimum uncovered element (not crossed by any line)
+  For each element in uncovered cells:
+    Subtract k
+  For each element at intersection of two lines:
+    Add k
+  All other elements remain unchanged
+
+Step 7: Repeat
+  Go to Step 3 until optimal assignment is obtained
